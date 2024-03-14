@@ -511,23 +511,50 @@ while t <= s:
     print(chr(t), end="") # end=' '는 마지막에 줄을 바꾸지 않고 빈칸만 띄운다.
     t += 1                # end='\n'로 작성하거나 생략하면, 값을 출력한 후 마지막(end)에 줄바꿈(newline)이 된다.
 
-# 75번 문자 1개 입력받아 알파벳 출력하기
-s = ord(input())
-t = ord("a")
-while t <= s :
-    print(chr(t))
+# 75번 정수 1개 입력받아 그 수까지 출력하기1
+n = int(input())
+t = int(0)
+while s >= t : 
+    print(t)
     t += 1
-# 76번 정수 1개 입력받아 그 수까지 출력하기1
+# 76번 정수 1개 입력받아 그 수까지 출력하기2
+n = int(input())
+for i in range(n+1) :
+    print(i)
 
-# 77번
+    
+# 77번 짝수 합 구하기 ★ 
+n = int(input())
+sum = 0
+for i in range(n+1) : # 시작값(1)부터 끝값(n+1) 직전까지의 범위를 생성
+    if i % 2 == 0 :
+        sum += i
+print(sum)
 
-# 78번
+# 78번 원하는 문자가 입력될 때까지 반복 출력하기
+while True : 
+    n = input()
+    print(n)
+    if n == 'q' : break   # 무한루프를 생성하고 그 안에서 입력을 받습니다. 입력값을 출력한 뒤 입력값이 q라면 break로 무한루프를 탈출합니다.  
+    
+# 79번 언제까지 더해야 할까? ★★
+n = int(input())
+sum = 0
+count = 0
+while sum < n : # <=를 하게 되면 while문이 한 번더 돌아간다.
+    count += 1
+    sum += count
+print(count)
+    
 
-# 79번
 
-# 80번
-
-# 81번
+# 80번 주사위 2개 던지기
+n,m = map(int, input().split()) # 면의 개수
+for i in range(1, n +1) :# 1 2 3 4 5 6
+    for j in range(1, m+1):
+        print(i, j)
+        
+# 81번 16진수 구구단 출력하기
 
 # 82번
 
