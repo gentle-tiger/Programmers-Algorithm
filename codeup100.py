@@ -554,27 +554,122 @@ for i in range(1, n +1) :# 1 2 3 4 5 6
     for j in range(1, m+1):
         print(i, j)
         
-# 81번 16진수 구구단 출력하기
+# 81번 16진수 구구단 출력하기 ★★★
+n = int(input(),16) # input으로 들어온 값이 16진수로 변환됨. int('A',16)-> 10
+for i in range(1, 16) :
+    print('%X'%n, '*%X'%i, '=%X'%(n*i), sep='')
+    # '%X'는 변수를 대문자 16진수로 변환한다
+    # '%X' % i 는 %X는 i 변수값을 대문자 16진수로 변환하여 문자열에 삽입한다. 
+    # '=%X' % (n * i) 는 '%X' 는 n * i 의 값을 대문자 16진수로 변환하여 문자열에 삽입한다. 
+    
+# 82번 3 6 9 게임의 왕이 되자 ★★
+n = int(input())
+for i in range(1,n+1) :
+    if (i % 10 == 3) or (i % 10 == 6) or (i % 10 == 9):  #  if i % 3 == 0  이렇게 할 경우 두자리수의 값은 해결이 되지 않는다.
+        print('X', end=' ')
+    else :
+        print(i, end=' ')
+     
+# 83번 빛 섞어 색 만들기
+a,b,c = map(int, input().split())
 
-# 82번
+for i in range(0,a) :
+  for j in range(0,b) :
+    for k in range(0,c) :
+    #  print(i, j, k)
+    #  print('%d %d %d' %(i,j,k))
+            
+print(a*b*c)
 
-# 83번
+# h44100 b16 c2 s10
+# 84번 소리 파일 저장용량 계산하기 ★★★
+# 1
+h,b,c,s = map(int,input().split())
+total_byte = h * b * c * s / 8 # 176400.0
+total_kb = total_byte / 1024 # 172.265625
+total_mb = total_kb / 1024 # 0.16822814...
+print('%0.1f MB' % total_mb) # 1.7MB
 
-# 84번
+# 2
+h,b,c,s = map(int, input().split())
+total = h*b*c*s/8/1024/1024
+print(round(total, 1),'MB')
+ 
+ 
+# 85번 그림 파일 저장용량 계산하기
+r,g,b = map(int, input().split())
+total = r*g*b/8/1024/1024  # 2.25
+# print(round(total,2), 'MB') # round는 공백을 주는 메서드
+print('%.2f' %total, 'MB') # %는 해당 자릿수까지 자르는 연산자
 
-# 85번
+# 86번 거기까지! 이제 그만~ ★
+n = int(input())
+sum = 0
+c = 1
+while True :
+    sum += c
+    c += 1
+    if n <= sum :
+        break
+print(sum)        
+        
+# 87번 3의 배수는 통과
+n = int(input())
+for i in range(1, n+1) :
+    if i % 3 == 0 :
+     continue
+    print(i , end=' ')
 
-# 86번
+# 88번 수 나열하기1 # 1 3 5   ★
+# 1
+a,d,n = map(int, input().split())
+print(a +d * (n-1)) # 3 * (n-1) + 1
 
-# 87번
+# 2 
+a,d,n = map(int, input().split())
+s = a 
+for i in range(2,n+1)
+    s += d
+print(s)
 
-# 88번
+# 89번 수 나열하기2 ★
+a,r,n = map(int, input().split())
+print(a * r **(n-1)) 
 
-# 89번
+    
+# 90번 수 나열하기3
+## n번 반복하며, 반복할 때 answer 값이 할당된다. answer는 이전 값에 m을 곱하고 + 1을 해준 값이다.
+# 1 메모리 사용량: 상수의 메모리 공간이 사용됨
+a,m,d,n = map(int, input().split()) # 1 -2 1 8
+count = 1
+answer = a
+while count < n  :
+    # print(count)
+    answer = (answer * m) + d  # answer는 누적이 아닌 계속 값이 재할당 된다. 
+    count += 1
+print(answer)
 
-# 90번
+# 2 메모리 사용량: 추가 메모리가 사용되지 않음
+a,m,d,n = map(int, input().split()) # 정해진 구간이 있는 반복은 for문이 더 낫나  
+for i in range(1,n) :
+    a = a * m + d
+print(a)
 
-# 91번
+# 91번 함께 문제 푸는 날
+
+
+a,b,c = map(int, input().split())
+a,b,c = map(int, "3 7 9".split())
+d = 1
+while True :
+    if (a * d) == (b * d) == (c * d) :
+        print(d)
+        break
+    d += 1
+    
+
+
+
 
 # 92번
 
