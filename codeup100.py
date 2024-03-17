@@ -655,36 +655,297 @@ for i in range(1,n) :
     a = a * m + d
 print(a)
 
-# 91번 함께 문제 푸는 날
-
-
+# 91번 함께 문제 푸는 날 ★★
 a,b,c = map(int, input().split())
-a,b,c = map(int, "3 7 9".split())
 d = 1
-while True :
-    if (a * d) == (b * d) == (c * d) :
-        print(d)
-        break
-    d += 1
+while (d % a != 0) or (d % b != 0) or (d % c != 0) : 
+    #  d % a == 0 and d % b == 0 and d % c == 0 위와 동일한 구문
+    d += 1  
+      
+print(d)
     
 
+# 92번 이상한 출석 번호 부르기1 ★
+n = int(input())
+a = list(map(int, input().split()))
+arr = [0] * 24 # 학생 23명  
+
+for i in range(n) :
+    arr[a[i]] += 1  # 1이 들어오면 index 2에 들어온다.
+for i in range(1,24) :
+    print(arr[i], end=' ') # 0을 제외한 1부터 카운트한다. 
+
+# 2 
+n = int(input())
+a = input().split()
+
+for i in range(n) :
+  a[i] = int(a[i])
+
+d = []
+for i in range(24) :
+  d.append(0)
+
+for i in range(n) :
+  d[a[i]] += 1
+
+for i in range(1, 24) :
+  print(d[i], end=' ')
+  
+### 해설 코드 #1은 arr 리스트를 생성하여 추가 메모리를 사용하지만 
+### 코드 #2는  d 리스트를 생성하는데, 입력을 저장하는 데에만 메모리가 사용되기에 #2가 메모리를 효율적으로 사용한다고 볼 수 있다.
+  
+# 93번 이상한 출석 번호 부르기2 ★
+n = int(input()) 
+a = list(map(int , input().split()))
+for i in range(n-1,-1,-1) : # range(시작, 끝, 증감) n-1, n-2, ..., 3, 2, 1, 0
+    print(a[i], end=' ')
+    
+# 94번 이상한 출석 번호 부르기3 ★★ / "10 4 2 3 6 6 7 9 8 5" 
+# 1
+n = int(input())
+a = list(map(int, input().split()))
+li = min(a)
+print(li)
+# 2   // a를 숫자형 배열로 만든 후 배열의 첫 번째 값을 기준으로 반복문을 통해 배열을 돌면서 
+#         첫 번째 값보다 작으면 해당 값으로 변환한다.
+n = int(input())
+a = input().split()
+
+for i in range(n) :
+    a[i] = int(a[i])
+
+min = a[0]
+
+for i in range(0,n):
+    if a[i] < min :
+        min = a[i]
+        
+print(min)
+
+# 95번 바둑판에 흰 돌 놓기 ★★★ / 2차원 배열 
+arr = []
+for i in range(20) : # [[], [], ..., [], []] 
+    arr.append([])  
+    for j in range(20) :
+        arr[i].append(0) # [0, 1, 2, ..., 18, 19] 
+
+n = int(input()) 
+for i in range(n) : # 흰 돌의 수만큼 반복하여 해당 좌표에 1을 추가한다. 
+    x, y = input().split()
+    # x, y = "2 2".split()
+    arr[int(x)][int(y)] = 1
+
+for i in range(1,20) : # arr[1][1]부터 시작
+    for j in range(1,20) :
+        print(arr[i][j], end=' ')
+    print() # j가 20까지 돌면 줄바꿈을 해준다.
+
+
+# 96번 바둑알 십자 뒤집기 ★★★
+# 1 
+arr = []
+for i in range(20) : # 시간 복잡도: O(n)
+    arr.append([0]*20)
+    
+for i in range(19) :
+    a = input().split()
+    for j in range(19) :
+        arr[i+1][j+1] = int(a[j]) # a[j]의 값이 해당 위치에 들어간다. 
+
+n = int(input()) # 좌표 횟수
+
+for i in range(n):
+    x,y = input().split() # 10 10 and 12 12
+    x = int(x)
+    y = int(y)
+    for j in range(1,20) :
+        if arr[j][y] == 0 : 
+            arr[j][y] = 1   # y열의 x 값이 0이라면 1로 설정
+        else :
+            arr[j][y] = 0   # y열의 x 값이 1이라면 0으로 설정 
+        
+        if arr[x][j] == 0 :
+            arr[x][j] = 1   # x열의 y 값이 0이라면 1로 설정
+        else :
+            arr[x][j] = 0   # x열의 y 값이 1이라면 0으로 설정  
+
+for i in range(1,20) : # arr[1][1]부터 시작
+    for j in range(1,20) :
+        print(arr[i][j], end=' ')
+    print()
+# 2 
+arr = []  
+for i in range(20) : # 시간 복잡도: O(n^2)
+    arr.append([])
+    for j in range(20) :
+        arr[i].append(0)
+        
+for i in range(19) :
+    a = input().split()
+    for j in range(19) :
+        arr[i+1][j+1] = int(a[j])  
+
+n = int(input()) 
+
+for i in range(n):
+    x,y = input().split() 
+    x = int(x)
+    y = int(y)
+    for j in range(1,20) :
+        if arr[j][y] == 0 : 
+            arr[j][y] = 1   
+        else :
+            arr[j][y] = 0   
+        
+        if arr[x][j] == 0 :
+            arr[x][j] = 1  
+        else :
+            arr[x][j] = 0     
+
+for i in range(1,20) : 
+    for j in range(1,20) :
+        print(arr[i][j], end=' ')
+    print()    
+    
+# 97번 설탕과자 뽑기
+h,w = input().split() # 세로(h), 가로(w) 
+n = input() # 막대의 개수(n)
+l, d, x, y = input().split() # 막대의 길이(l), 방향(d), 좌표(x, y)
+
+arr = []
+h, w = "5 5".split()
+h = int(h)
+w = int(w)
+n = int(3)
+l, d, x, y = list(map(int,"3 1 2 3".split()))
+print(l, d, x, y, h, w)
+
+arr = []
+h,w = list(map(int,input().split())) # 세로(h), 가로(w) 
+n = int(input()) # 막대의 개수(n)
+
+for i in range(h + 1) : # 5 * 5  |  h + 1 , w + 1
+    arr.append([0] * (w + 1))
+    # print(arr[i])
+
+for i in range(n) :
+    l, d, x, y = list(map(int,input().split())) # 막대의 길이(l), 방향(d), 좌표(x, y)
+    if d == 0 :
+        for j in range(l) : # x축 이동이라면 x는 고정, y 변동
+            arr[x][y + j] = 1 # y + 0 -> y + 1 -> y + 2 ...
+    else :
+        for j in range(l) :
+            arr[x + j][y] = 1
+
+
+for i in range(1, h + 1) : # h + 1 , w + 1
+    for j in range(1, w + 1) : 
+        print(arr[i][j], end=' ')
+    print()
+
+
+# 98번 성실한 개미
+
+n = int(10)
+arr = []
+
+# [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+for i in range(n + 2) : # (n+2) x (n+2)의 2차원 배열 생성  | 아직 배열 생성도 잘 못함...ㅜㅜ
+    arr.append([])  
+    for j in range(n) :
+        arr[i].append(0)
+    print(arr[i])
+
+
+ex = [
+'1 1 1 1 1 1 1 1 1 1',
+'1 0 0 1 0 0 0 0 0 1',
+'1 0 0 1 1 1 0 0 0 1',
+'1 0 0 0 0 0 0 1 0 1',
+'1 0 0 0 0 0 0 1 0 1',
+'1 0 0 0 0 1 0 1 0 1',
+'1 0 0 0 0 1 2 1 0 1',
+'1 0 0 0 0 1 0 0 0 1',
+'1 0 0 0 0 0 0 0 0 1',
+'1 1 1 1 1 1 1 1 1 1',
+]
+
+for i in range(len(ex)) : # 예시를 문자열로 변환.  ex 문자열의 배열을 arr로 옮겼음 \\ 범위 설정을 잘해야 함. 그렇지 않으며 목록 index가 범위를 벗어남. 
+    arr[i] = list(map(int, ex[i].split()))  # 각 행의 길이를 기준으로 행의 요소를 복사
+    print(arr[i])  # len(ex) : 10 -> 0~9 -> 1~10
+  
+
+x = int(1)
+y = int(1)
+
+
+while True : # 일정한 반복이 아닌 먹이를 찾을 때까지 찾기에 while 문 사용, 하지만 1씩 오르는 변수가 필요하기에 for 문 사용 
+    if arr[x][y] == 0 :
+        arr[x][y] = 9
+        print('a')
+        for i in range(n) :
+            print(arr[i])
+    elif arr[x][y] == 2 :
+        arr[x][y] = 9
+        print('b')
+        for i in range(n) :
+            print(arr[i])
+        break
+    
+    if (arr[x][y+1] == 1 and arr[x+1][y] == 1) or (x == 9 and y == 9) :
+        break
+    if arr[x][y+1] != 1 :
+        y += 1
+    elif arr[x+1][y] != 1 :
+        x += 1
+
+for i in range(n) :
+    for j in range(n) :
+        print(arr[i][j], end=' ')
+    print()
+    
+    
+
+        
 
 
 
-# 92번
+arr = []
 
-# 93번
+for i in range(12) : # 빈 배열을 만들고
+    arr.append([])  
+    for j in range(12) : # 빈 배열에 0을 12개 넣는다.
+        arr[i].append(0)
 
-# 94번
+for i in range(10) :   # input 값을 2차원 배열에 할당
+    date = input().split()
+    for j in range(10) :
+        arr[i+1][j+1] = int(date[j])
 
-# 95번
+x = int(2)
+y = int(2)
 
-# 96번
+while True :
+    if arr[x][y] == 0 :
+        arr[x][y] = 9
 
-# 97번
+    elif arr[x][y] == 2 :
+        arr[x][y] = 9
+        break
+    
+    if (arr[x][y+1] == 1 and arr[x+1][y] == 1) or (x == 9 and y == 9) :
+        break
+    if arr[x][y+1] != 1 :
+        y += 1
+    elif arr[x+1][y] != 1 :
+        x += 1
 
-# 98번
+for i in range(1,11) :
+    for j in range(1,11) :
+        print(arr[i][j], end=' ')
+    print()
+    
+    
 
-# 99번
-# 100번
-
+        
