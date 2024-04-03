@@ -147,36 +147,97 @@ else :
 
 
 #-----------------------------------------------
-# <문제>금광 
-
+# <문제> 금광 
+#  예제 
+# n = 4
+# m = 4
+# array = [1,3,1,5, 2,2,4,1, 5,0,2,3, 0,6,1,2] : 16
+# dp = []
+# index= 0 
 
 for tc in range(int(input())) :
-    n, m = map(int, input().split()) #### n(가로) 4, m(세로) 3
+    n, m = map(int, input().split())
     array = list(map(int, input().split()))
     dp = []
     index = 0
-# array = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
-    for i in range(n) : #### 4 / 배열의 길이만큼 돈다. 
-        dp.append(array[index : index + m]) #### array 리스트의 index부터 index + m까지의 요소가 추가
-        index += m #### 4만큼 오르면서 input으로 들어오는 배열을 4개씩 끊어서 나눈다. 
-        print('index :', index) #### 4 8 12
-        # [1, 2, 3, 4]
-        # [5, 6, 7, 8]
-        # [9, 10, 11, 12]
+    for i in range(n) : 
+        dp.append(array[index : index + m]) 
+        index += m 
+        print('index :', index) 
+        
     # 다이나믹 프로그래밍 
-    for j in range(1, m) : #### 1, 2, 3
+
+    # 참고                                <dp>
+    # i = 3, j = 4 => (i,j)          [1, 3, 1, 5]
+    # (0, 0) (0, 1) (0, 2) (0, 3)    [2, 2, 4, 1] => 답 : 16
+    # (1, 0) (1, 1) (1, 2) (1, 3)    [5, 0, 2, 3]
+    # (2, 0) (2, 1) (2, 2) (2, 3)    [0, 6, 1, 2]
+    for j in range(1, m) :
         for i in range(n) :
             # 왼쪽 위에서 오는 경우 
-            if i == 0 : left_up = 0
-            else : left_up = dp[i-1][j-1]
+            if i == 0 : left_up = 0 # i가 배열이 위로 끝이면, 0을 반환하며 해당 값을 저장한다. 
+            else : left_up = dp[i-1][j-1] # i가 배열에 끝이 아니라면 (i,j)를 기준으로 (i-1,j-1)한 값을 저장한다. (1,1)을 기준으로 (0,0)의 값을 받겠다는 뜻이다.
             # 왼쪽 아래에서 오는 경우
-            if i == n-1: left_down = 0
-            else : left_down = dp[i+1][j+1]
-            # 왼쪽에서 오는 경우 
-            left = dpp[i][j-1]
-            dp[i][j] = d[i][j] + max(left_up, left_down, left)
-    result = 0
+            if i == n-1 : left_down = 0 #  i가 배열이 아래로 끝이면(n-1). i가 마지막 배열에 존재한다면 0을 반환하며 해당 값을 저장한다. (index는 0부터 시작하기에 -1)
+            else : left_down = dp[i+1][j-1] # i가 배열에 끝이 아니라면 (i,j)를 기준으로 (i+1,j+1)한 값을 저장한다. (1,1)을 기준으로 (2,0)의 값을 받겠다는 뜻이다.
+            # 왼쪽에서 오는 경우
+            left =dp[i][j-1] # i가 0도 아니고 n-1도 아니라면 현재 위치의 왼쪽의 값을 가져온다. 
+            dp[i][j] = dp[i][j] + max(left_up, left, left_down)
+    result = 0 
+    print('m :',m)
     for i in range(n) : 
-        result = max(result, dp[i][m-1])
-    print(result)            
+        result = max(result, dp[i][m-1]) # 해당 값을 누적하는데, 위의 for 문에서 하나의 배열이 끝날 때마다 해당 배열의 값을 저장합니다. 
+    print(result)         
                 
+    
+
+                       
+#-----------------------------------------------
+# <문제> 병사 배치하기 
+
+# for i in range(int(input())) : 
+array = [15,11,4,8,5,2,4] # len -> 7
+
+
+dp = []
+out = 0
+n = 7
+
+for i in range(0, n-1):
+    
+    if array[i] > array[i+1] : # 현재 index의 값과 다음 index의 값을 비교 했을 때  
+        dp.append(array[i])
+        out += 1
+    else : 
+        print('번호',i,'의 index는' ,array.index(i))
+    
+    if  i + 2 == len(array) : # i = 5 + 2 == 7
+        if array[n-2] > array[n-1] : # index 5와 index 6을 비교
+            dp.append(array[n-2]) # index 5 추가
+            print('n-1 추가')
+            out += 1
+        else :
+            dp.append(array[n-1]) # index 6 추가
+            out += 1
+    print(dp)
+
+
+# -------------
+
+n = int(input())
+array = list(map(int, input().split()))
+
+#### 순서를 뒤집어 '최장 증기 부분 수열' 문제로 변환 
+array.revese()
+
+# 다이나믹 프로그래밍을 위한 1차원 DP 테이블 초기화 
+dp = [1] * n 
+
+# 가장 긴 증가하는 부분 수열(LTS) 알고리즘 수행 
+for i in range(1,n) :
+    for j in ranag(0,i):
+        if array[j] < array[i] :
+            dp[i] = max(dp[i], dp[j] + 1)
+
+# 열외해야 하는 병사위 최소 수를 출력 
+print(n - max(dp))
