@@ -195,49 +195,27 @@ for tc in range(int(input())) :
 #-----------------------------------------------
 # <문제> 병사 배치하기 
 
-# for i in range(int(input())) : 
-array = [15,11,4,8,5,2,4] # len -> 7
-
-
-dp = []
-out = 0
-n = 7
-
-for i in range(0, n-1):
-    
-    if array[i] > array[i+1] : # 현재 index의 값과 다음 index의 값을 비교 했을 때  
-        dp.append(array[i])
-        out += 1
-    else : 
-        print('번호',i,'의 index는' ,array.index(i))
-    
-    if  i + 2 == len(array) : # i = 5 + 2 == 7
-        if array[n-2] > array[n-1] : # index 5와 index 6을 비교
-            dp.append(array[n-2]) # index 5 추가
-            print('n-1 추가')
-            out += 1
-        else :
-            dp.append(array[n-1]) # index 6 추가
-            out += 1
-    print(dp)
-
-
-# -------------
-
+#### n = 7
+#### array = [15,11,4,8,5,2,4] # len -> 7
+ 
 n = int(input())
 array = list(map(int, input().split()))
 
-#### 순서를 뒤집어 '최장 증기 부분 수열' 문제로 변환 
-array.revese()
+#### 순서를 뒤집어 '최장 증가 부분 수열' 문제로 변환 
+array.reverse()
 
-# 다이나믹 프로그래밍을 위한 1차원 DP 테이블 초기화 
+#### 다이나믹 프로그래밍을 위한 1차원 DP 테이블 초기화 
 dp = [1] * n 
 
-# 가장 긴 증가하는 부분 수열(LTS) 알고리즘 수행 
-for i in range(1,n) :
-    for j in ranag(0,i):
-        if array[j] < array[i] :
+#### 가장 긴 증가하는 부분 수열(LTS) 알고리즘 수행 
+for i in range(1,n) : #### dp[i]는 배열의 i번째 원소가 마지막 원소인 부분 수열의 최대 길이를 나타냄. 1부터 n까지
+    print(f'--------i: {i}-------')
+    for j in range(0,i): #### 이를 위해 모든 i에 대해 이전 원소들과 비교하여 증가하는 부분 수열의 길이를 업데이트 한다. 
+        if array[j] < array[i] : #### j는 0부터, i는 1부터 
+            print(f'j : {j}, i : {i}일 때 {dp} j:{array[j]}, i:{array[i]}')
             dp[i] = max(dp[i], dp[j] + 1)
 
-# 열외해야 하는 병사위 최소 수를 출력 
+#### 열외해야 하는 병사위 최소 수를 출력 
 print(n - max(dp))
+
+dp
