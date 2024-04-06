@@ -76,15 +76,103 @@ print('재귀적으로 구현',factorial_iterativee(5))
 
 
 
+# -----------------------
+# 유클리드 호제법
+
+def gcd(a,b) :
+    if a % b == 0 :
+      print(b)
+      return b #### 해당 b는 else의 return 값인 gcd()의 b로 다시 들어가게 된다. 
+    else :
+        print(f'{b}, a{a}%b{b} = {a % b}')
+        # 162, a:192 % b:162 = 30
+        #  30, a:162 % b:30 = 12
+        #  12,  a:30 % b:12 = 6
+        return gcd(b, a % b)
+
+print(gcd(192,162))  
 
 
+# -----------------------
+# DFS 소스코드 예제 
+
+# DFS 메서드 정의 
+def dfs(graph, v, visited) :
+    
+    # 현재 노드를 방문 처리 
+    visited[v] = True
+    print(v, end=' ')
+    
+    # 현재 노드와 연결된 다른 노드를 재귀적으로 방문 
+    for i in graph[v] :
+        if not visited[i] :
+            dfs(graph, i, visited)
+
+# 각 노드가 연결된 정보를 표현(2차원 리스트)
+graph = [
+    [],
+    [2,3,8],
+    [1,7],
+    [1,4,5],
+    [3,5],
+    [3,4],
+    [7],
+    [2,6,8],
+    [1,7]
+]
+
+# 각 노드가 방문된 정보를 표현(1차원 리스트)
+visited = [False] * 9
+
+# 정의된 DFS 함수 호출 
+dfs(graph, 1, visited) #### 1 2 7 6 8 3 4 5
 
 
+# -----------------------
+# BFS 소스코드 예제 
+
+from collections import deque
+
+# BFS 메서드 정의
+def bfs(graph, start, visited) :
+    
+    # 큐(Queue) 구현을 위해 deque 라이브러리 사용 
+    queue = deque([start])
+    # 현재 노드를 방문처리 
+    visited[start] = True
+    # 큐가 빌 때까지 반복 
+    while queue :
+        # 큐에서 하나의 원소를 뽑아 출력하기 
+        v = queue.popleft() #### popleft 메서드는 큐의 맨 앞에 있는 원소를 추출
+        print(v, end=' ')
+        # 아직 방문하지 않은 인접한 원소들을 큐에 삽입 / graph[v]는 노드 v와 연결된 노드들을 담은 리스트 / 따라서 for i in graph[v]는 현재 노드 v와 연결된 노드들을 탐색하게 됩니다.
+        for i in graph[v] :
+            if not visited[i] : #### not은 부정연산자로 false를 만나야 참(true)이 됨. 즉  visited[i]가 false라면 참이 됨으로 다음 코드가 실행됨. 
+                                #### 즉 해당 노드 i가 이미 방문된 상태라면 if not visited[i]는 거짓이 되어 해당 노드를 큐에 추가하지 않고 다음 인접한 노드를 탐색하게 됩니다.
+                queue.append(i) #### append 메서드는 큐의 맨 뒤에 원소를 추가하는 것
+                visited[i] = True
+                
+                
 
 
+# 각 노드가 연결된 정보를 표현(2차원 리스트)
+graph = [
+    [],
+    [2,3,8],
+    [1,7],
+    [1,4,5],
+    [3,5],
+    [3,4],
+    [7],
+    [2,6,8],
+    [1,7]
+]
 
+# 각 노드가 방문된 정보를 표현(1차원 리스트)
+visited = [False] * 9
 
-
+# 정의된 DFS 함수 호출 
+dfs(graph, 1, visited) #### 시작 노드가 1이라는 뜻. 
 
 
 
