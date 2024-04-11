@@ -237,40 +237,44 @@ from collections import deque
 def bfs(x,y) : 
     # queue 구현을 위해 deque 라이브러리 사용
     queue = deque()
-    queue.append((x,y))
-    print('queue :', queue)
+    queue.append((x,y))  #### (x,y)를 묶어서 큐에 추가
     # 큐가 빌 때까지 반복하기 
     while queue :
-        x, y = queue.popleft()
+        x, y = queue.popleft() #### 덱(deque)에서 가장 왼쪽에 있는 요소를 제거함과 동시에 x와 y를 정의하게 된다. 
+        print('x,y : ', x,y)
         # 현재 위치에서 4가지 방향으로의 위치 확인 
+           # dx = [-1, 1, 0, 0] # (-1,0) 상 ~ (0,1) 우
+           # dy = [0, 0, -1, 1]
         for i in range(4) :
             nx = x + dx[i]
             ny = y + dy[i]
             
-            if nx < 0 or nx > n or ny < 0 or ny > m :
-                continue
+            if nx < 0 or nx >= n or ny < 0 or ny >= m :
+                continue #### 조건에 부합하면 해당 좌표(nx,ny)는 아래의 코드를 무시하고, 다음 i를 진행한다.  
             
-            # 괴물이 있는 부분 무시  
+            # 괴물이 있는 위치 무시  
             if graph[nx][ny] == 0 :
                 continue
             
             # 해당 노드를 처음 방문하는 경우에만 최단 거리 기록 
-            if graph[nx][ny] == 1 :
-                graph[nx][ny] == graph[x][y] + 1
-                queue.append((nx,ny))
+            if graph[nx][ny] == 1 : #### graph[nx][ny]가 1(방문하지 않았다면)이라면 해당 좌표의 값에 + 1값을 하여 거리를 최신화한다. 
+                graph[nx][ny] = graph[x][y] + 1
+                queue.append((nx,ny)) #### queue.append((nx, ny)) 코드를 통해 현재 위치에서 이동 가능한 인접한 위치들을 큐에 추가할 때, 이전에 탐색한 노드인 (x, y)를 제거하고 새로운 인접한 위치들을 기준으로 다음 반복을 수행하게 됩니다.
     # 가장 오른쪽 아래까지의 최단 거리 반환 
-    return graph[n-1][m-1]
+    print(graph)
+    return graph[n-1][m-1] #### index가 0부터 시작이기 때무넹  (5,6)을 찾기 위해서느 (4,5)를 출력해야한다. 
 
                 
 
-
+for i in range (5) :
+    print(graph[i])
 
 
 
 
 # N, M을 공백기준으로 구분하여 입력 받기 
 # n, m = map(int, input().split())
-n, m = map(int, '4 5'.split())
+n, m = map(int, '5 6'.split())
 print(f'n :{n},  m :{m}')
 
 # 2차원 리스트의 맵 정보 입력 받기 
@@ -278,10 +282,13 @@ test = list('101010 111111 000001 111111 111111'.split())
 test
 
 graph = []
-
+graph
 # for i in range(n) :
-#     graph.append(list(map(int,input())))
-print('graph :', graph)
+#     graph.append(list(map(int,input()))) # 입력값을 한줄씩 받아서 숫자로 변환하여 리스트에 추가한다. 
+
+list(map(int, '12345'.split()))
+
+
 for i in test :
     arr = []
     for j in i : 
@@ -295,7 +302,91 @@ dx = [-1, 1, 0, 0] # (-1,0) 상 ~ (0,1) 우
 dy = [0, 0, -1, 1]
 
 # BFS를 수행한 결과 출력
-print(bfs(1,0))
+print(bfs(0,0))
+
+
+#--------------
+# 미로만들기 
+
+# n = int(input())
+n = 8
+# for i in n :
+#     graph.append(list(map(int, input())))
+test = '11100110 11010010 10011010 11101100 01000111 00110001 11011000 11000111'.split()
+test
+graph = []
+
+for i in test :
+    arr = []
+    for j in i :
+        arr.append(int(j))
+    graph.append(arr)
+    print(graph)
+
+for i in range(n) :
+    print(graph[i])
+    
 
 
 
+# 미로만들기
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+# N = int(input())
+n = int(8)
+dx = [-1, 1, 0, 0] #### 상,하,좌,우
+dy = [0, 0, -1, 1]
+
+arr = []
+for i in range(N):
+    arr.append(list(map(int, input().strip()))) #### 메서드는 문자열의 양쪽 끝에서 공백이나 개행 문자를 제거
+
+test = [[1, 1, 1, 0, 0, 1, 1, 0],
+[1, 1, 0, 1, 0, 0, 1, 0],
+[1, 0, 0, 1, 1, 0, 1, 0],
+[1, 1, 1, 0, 1, 1, 0, 0],
+[0, 1, 0, 0, 0, 1, 1, 1],
+[0, 0, 1, 1, 0, 0, 0, 1],
+[1, 1, 0, 1, 1, 0, 0, 0],
+[1, 1, 0, 0, 0, 1, 1, 1]]
+
+
+
+def bfs():
+    queue = deque()
+    queue.append((0, 0)) #### 큐에 시작점 삽입
+    visited = [[-1] * n for _ in range(n)] #### n*n의 2차원 배열을 만들어 -1로 채워 넣는다.
+    visited[0][0] = 0 #### visited는 검은 방을 흰 방으로 바꾼 횟수이다. 시작점의 초기값이 0인 이유는 흰 방을 바꾸지 않으면 답이 0이기 때문이다. 
+    while queue:
+        x, y = queue.popleft() #### 현재 위치의 큐를 삭제함과 동시에 x,y의 값을 할당한다.(아래에서 appendleft를 사용하기에 원소들은 후입선출된다.)
+        if x == n-1 and y == n-1: #### x,y는 끝방에(n-1,n-1) 도착할 경우 visited를 리턴한다.  
+            return visited[x][y]
+        for i in range(4): #### 현재 (x,y)노드를 기준으로 상하좌우의 값을 찾는다. 
+            nx = x + dx[i]
+            ny = y + dy[i]
+            #### 만약 현재 노드(nx,ny)가 0보다 크거나 같으며 배열의 크기보다 작으며 방문하지 않았다면(-1) 아래의 코드를 실행시킨다. 
+            if 0 <= nx < n and 0 <= ny < n and visited[nx][ny] == -1: 
+                if test[nx][ny] == 1: #### 주어진 배열에서 현재 노드가 흰 방이라면 
+                    queue.appendleft((nx, ny)) #### 현재 노드를 큐 왼쪽에 삽입한다. (appendleft를 실행하기 때문에 bfs 함수가 실행되면 이후에 들어온 값이 먼저 나간다. )
+                    visited[nx][ny] = visited[x][y] #### 동일한 흰 방의 묶음이기 때문에 이전의 값과 동일하게 값을 할당한다. 
+                else: #### 주어진 배열에서 현재 노드가 검은 방이라면
+                    queue.append((nx, ny)) #### 현재 노드를 큐 오른쪽에 삽입한다. (검은방은 큐의 오른쪽에 삽입, 가장 나중에 나가게 됨)
+                    visited[nx][ny] = visited[x][y] + 1 #### 검은 방을 흰 방처럼 사용했음으로 + 1 해준다. 
+
+
+print(bfs())
+
+
+
+
+# visited = [[-1] * 8 for _ in range(8)]
+#[[-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1],
+# [-1, -1, -1, -1, -1, -1, -1, -1]]
